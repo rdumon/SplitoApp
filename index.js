@@ -4,6 +4,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
+const token = "EAAMBni1vWM8BAOGiPAMo45vz05qnoWZAcMC0Lgmit0Xa410GWNaZCmD0y1GRZAlbaEJbZAdhhOW32FWK70zVZB6EXAQrAI2FHzdzxq0RF56ZBpOjTxfsYXKVzZBaMDkH47R8VSVY0h9dzOJ76vlDNooW0TcyOkoq5SGUkhuZCsSaUwZDZD"
+const func = require('./function.js')
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -33,33 +35,16 @@ app.post('/webhook/', function (req, res) {
 	    let sender = event.sender.id
 	    if (event.message && event.message.text) {
 		    let text = event.message.text
-		    sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+		    if (text === 'Generic') {
+			    func.sendGenericMessage(sender)
+		    	continue
+		    }
+		    func.sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
 	    }
     }
     res.sendStatus(200)
 })
 
-const token = "EAAMBni1vWM8BAOGiPAMo45vz05qnoWZAcMC0Lgmit0Xa410GWNaZCmD0y1GRZAlbaEJbZAdhhOW32FWK70zVZB6EXAQrAI2FHzdzxq0RF56ZBpOjTxfsYXKVzZBaMDkH47R8VSVY0h9dzOJ76vlDNooW0TcyOkoq5SGUkhuZCsSaUwZDZD"
-
-
-function sendTextMessage(sender, text) {
-    let messageData = { text:text }
-    request({
-	    url: 'https://graph.facebook.com/v2.6/me/messages',
-	    qs: {access_token:token},
-	    method: 'POST',
-		json: {
-		    recipient: {id:sender},
-			message: messageData,
-		}
-	}, function(error, response, body) {
-		if (error) {
-		    console.log('Error sending messages: ', error)
-		} else if (response.body.error) {
-		    console.log('Error: ', response.body.error)
-	    }
-    })
-}
 
 // Spin up the server
 app.listen(app.get('port'), function() {
