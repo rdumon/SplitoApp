@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
 const token = "EAAMBni1vWM8BAOGiPAMo45vz05qnoWZAcMC0Lgmit0Xa410GWNaZCmD0y1GRZAlbaEJbZAdhhOW32FWK70zVZB6EXAQrAI2FHzdzxq0RF56ZBpOjTxfsYXKVzZBaMDkH47R8VSVY0h9dzOJ76vlDNooW0TcyOkoq5SGUkhuZCsSaUwZDZD"
-const func = require('./function.js')
+const func = require('./functions.js')
 
 app.set('port', (process.env.PORT || 5000))
 
