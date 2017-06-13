@@ -45,7 +45,7 @@ app.post('/webhook/', function (req, res) {
 
 // for Facebook verification
 app.get('/splito/', function (req, res) {
-	res.sendFile( "/index.html" );
+	res.sendFile( "./index.html" );
 })
 
 
