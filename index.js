@@ -43,6 +43,11 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200)
 })
 
+// for Facebook verification
+app.get('/splito/', function (req, res) {
+	res.sendFile( "/index.html" );
+})
+
 
 // Spin up the server
 app.listen(app.get('port'), function() {
